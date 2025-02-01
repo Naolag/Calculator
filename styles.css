@@ -1,0 +1,40 @@
+body{
+    background-color: black;
+}
+textarea{
+    width: 255px;
+    height: 50px;
+}
+.manual{
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+}
+.operator{
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+}
+button{
+    width: 60px;
+    padding: 8px;
+    font-weight: bold;
+    font-size: larger;
+    font-family: 'Courier New', Courier, monospace;
+}
+#one, #two, #three,#four,#five,#six,#seven,#eight,#nine,#point,#zero,#backspace{
+    background-color: rgba(0, 217, 255, 0.158);
+}
+#clear, #cancel{
+    width: 92px;
+    background-color: rgba(0, 255, 128, 0.164);
+    margin-top: 4px;
+} 
+#equal{
+    margin-top: 4px;
+}
+#devide,#multiply,#substruct,#sum,#equal{
+    background-color: rgba(0, 247, 255, 0.219);
+    color: whitesmoke;
+}
+
