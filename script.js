@@ -1,16 +1,22 @@
-const display=document.querySelector("#display")
-display.textContent=" ";
-const nine=document.querySelector("#nine");
-const eight=document.querySelector("#eight");
-const seven=document.querySelector("#seven");
-const six=document.querySelector("#six");
-const five=document.querySelector("#five");
-const four=document.querySelector("#four");
-const three=document.querySelector("#three");
-const two=document.querySelector("#two");
-const one=document.querySelector("#one");
-const zero=document.querySelector("#zero");
-const point=document.querySelector("#point");
+const display = document.querySelector("#display");
+display.textContent = " ";
+
+const nine = document.querySelector("#nine");
+const eight = document.querySelector("#eight");
+const seven = document.querySelector("#seven");
+const six = document.querySelector("#six");
+const five = document.querySelector("#five");
+const four = document.querySelector("#four");
+const three = document.querySelector("#three");
+const two = document.querySelector("#two");
+const one = document.querySelector("#one");
+const zero = document.querySelector("#zero");
+const point = document.querySelector("#point");
+
+let firstNumber = 0;
+let operator = null;
+let secondNumber = 0;
+
 function clickNumber() {
     let clickedNumber;
     const buttons = [nine, eight, seven, six, five, four, three, two, one, zero, point];
@@ -18,76 +24,105 @@ function clickNumber() {
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
             clickedNumber = button.textContent;
-            display.textContent +=clickedNumber;
-        })
+            display.value += clickedNumber; 
+            if (operator == null) {
+                firstNumber = 10 * firstNumber + parseInt(clickedNumber);
+                
+            } else {
+                secondNumber = 10 * secondNumber + parseInt(clickedNumber);
+            }
+        });
     });
-    return clickedNumber;
 }
+const sighnChange=document.querySelector("sighn");
+const clear = document.querySelector("#clear");
+const cancel = document.querySelector("#cancel");
+const divide = document.querySelector("#devide");
+const multiply = document.querySelector("#multiply");
+const subtract = document.querySelector("#substruct");
+const sum = document.querySelector("#sum");
 
-const Backspace=document.querySelector("#Backspace");
-const clear=document.querySelector("#clear");
-const cancel=document.querySelector("#cancel");
-const devide=document.querySelector("#devide");
-const multiply=document.querySelector("#multiply");
-const substruct=document.querySelector("#substruct");
-const sum=document.querySelector("#sum");
 function operation() {
-    let clickedOperator;
-    const buttons = [devide, multiply, substruct, sum];
+    const buttons = [divide, multiply, subtract, sum];
 
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
-            clickedOperator = button.id;
-            display.textContent +=button.textContent;
+            if(operator == null) {
+                operator = button.id;
+                display.value += button.textContent;
+            } else {
+                const solution= operate(firstNumber, operator, secondNumber);
+                display.value = solution;
+                firstNumber=solution;
+                secondNumber = 0;
+                operator = button.id;
+                display.value +=button.textContent;
+            }
+           
         });
     });
-     return clickedOperator;
-};
-const equals=document.querySelector("#equal");
-function divider(a,b){
-    return a/b;
 }
-function multiplier(a,b){
-    return a*b;
-}
-function subtructor(a,b){
-    return a-b;
-}
-function adder(a,b){
-    return a+b;
-}
-function operate(firsnumber,operator,secondNumber){
 
-    let solution;
-    switch(clickedOperator) {
-        case "devide": solution=divider(firsnumber,secondNumber); break;
-        case "multiply": solution=multiplier(firsnumber,secondNumber); break;
-        case "substruct": solution=subtructor(firsnumber,secondNumber); break;
-        case "sum": solution=adder(firsnumber,secondNumber); break;
+const equals = document.querySelector("#equal");
+
+function divider(a, b) {
+    return a / b;
+}
+
+function multiplier(a, b) {
+    return a * b;
+}
+
+function subtractor(a, b) {
+    return a - b;
+}
+
+function adder(a, b) {
+    return a + b;
+}
+
+function operate(firstNumber, operator, secondNumber) {
+    let answer;
+
+    switch (operator) {
+        case "devide":
+            answer = divider(firstNumber, secondNumber);
+            break;
+        case "multiply":
+            answer = multiplier(firstNumber, secondNumber);
+            break;
+        case "substruct":
+            answer = subtractor(firstNumber, secondNumber);
+            break;
+        case "sum":
+            answer = adder(firstNumber, secondNumber);
+            break;
     }
+    return answer;
+}
 
-}   
 clickNumber();
 operation();
-/*
-if(display.textContent==""){
-    while(true){
-    let firsnumber=0;
-    let operator;
-    let secondNumber=0;
-        let number=0;
-        number=clickNumber();
-        operator=operation();
-        if(operator==null || (operator=="substruct" && firsnumber==0))
-            firsnumber= 10*firsnumber + number;
-        else 
-           secondNumber= 10*secondNumber +number;
-       if( equals.addEventListener("click",()=>{
-            display.textContent=operate(firsnumber,operator,secondNumber);
-        }))
-          break;
-    }
-}  
-clear.addEventListener("click",display.textContent="");
 
-*/
+equals.addEventListener("click", () => {
+    display.value = operate(firstNumber, operator, secondNumber);
+    firstNumber = 0;
+    secondNumber = 0;
+    operator = null;
+});
+
+clear.addEventListener("click",()=>{
+    display.value=" ";
+    firstNumber=0;
+    secondNumber=0;
+    operator=null;
+})
+cancel.addEventListener("click",()=>{
+    if(operator==null)
+        firstNumber=parseInt(firstNumber/10);
+    else if(secondNumber=0)
+        operator=null;
+    else if(operator!=null)
+        secondNumber=parseInt(secondNumber/10);
+    display.value=display.value.slice(0,-1);
+})

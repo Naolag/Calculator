@@ -22,7 +22,7 @@ button{
     font-size: larger;
     font-family: 'Courier New', Courier, monospace;
 }
-#one, #two, #three,#four,#five,#six,#seven,#eight,#nine,#point,#zero,#backspace{
+#one, #two, #three,#four,#five,#six,#seven,#eight,#nine,#point,#zero,#sighn{
     background-color: rgba(0, 217, 255, 0.158);
 }
 #clear, #cancel{
